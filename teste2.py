@@ -2,26 +2,21 @@ from sympy import var
 from sympy import sympify
 from sympy.utilities.lambdify import lambdify
 
+def calcular_funcao_AoB(funcaoA_expr, funcaoB_expr, x, valor_de_x):
+    funcao_AoB_expr = funcaoA_expr.subs(x, funcaoB_expr)
+    funcao_AoB =  lambdify(x, funcao_AoB_expr)
+
+    return funcao_AoB(valor_de_x)
+
 x = var('x')  
 x_input = int(input("digite um valor: "))
 funcaoF_input = input("digite a função F: ") 
-funcaoG_input = input("digite a função G: ")
-funcaoF_expr = sympify(funcaoF_input)  
-funcaoG_expr = sympify(funcaoG_input)   
+funcaoG_input = input("digite a função G: ") 
+funcaoF_expr = sympify(funcaoF_input)
+funcaoG_expr = sympify(funcaoG_input)
 
-funcao_FoF_expr = funcaoF_expr.subs(x,funcaoF_expr)
-funcao_FoF = lambdify(x, funcao_FoF_expr)  
-print(f"FoF(x) = {funcao_FoF(x_input)}")  
-
-funcao_FoG_expr = funcaoF_expr.subs(x,funcaoG_expr)
-funcao_FoG = lambdify(x, funcao_FoG_expr)  
-print(f"FoG(x) = {funcao_FoG(x_input)}")   
-
-funcao_GoG_expr = funcaoG_expr.subs(x,funcaoG_expr)
-funcao_GoG = lambdify(x, funcao_GoG_expr)  
-print(f"GoG(x) = {funcao_GoG(x_input)}")   
-
-funcao_GoF_expr = funcaoG_expr.subs(x,funcaoF_expr)
-funcao_GoF = lambdify(x, funcao_GoF_expr)  
-print(f"GoF(x) = {funcao_GoF(x_input)}")  
+print(f"FoF(x) = {calcular_funcao_AoB(funcaoF_expr, funcaoF_expr, x, x_input)}")   
+print(f"FoG(x) = {calcular_funcao_AoB(funcaoF_expr, funcaoG_expr, x, x_input)}")   
+print(f"GoG(x) = {calcular_funcao_AoB(funcaoG_expr, funcaoG_expr, x, x_input)}")   
+print(f"GoF(x) = {calcular_funcao_AoB(funcaoG_expr, funcaoF_expr, x, x_input)}")  
 
